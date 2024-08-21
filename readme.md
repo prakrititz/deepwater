@@ -1,6 +1,6 @@
 # Visual Assessment of Water's Purity by Utilizing Machine Learning and Computer Vision
 
-![Project Logo](path/to/logo.png)
+![Project Logo](static/images/logo-deepwater/png/logo-color.png)
 
 ## Introduction
 
