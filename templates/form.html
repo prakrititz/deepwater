@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Microplastic Detection Tool</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+      <link href="{{ url_for('static', filename='css/index.css') }}" rel="stylesheet" />
+</head>
+<body>
+  <div class="max-w-4xl mx-auto p-4 mt-10 bg-[#1F2D5A] rounded-lg shadow-md">
+    <div class="flex justify-center items-center mb-4">
+        <img 
+          src="{{ url_for('static', filename='images/logo-deepwater/png/logo-color.png') }}" 
+          alt="Deepwater" 
+          class="h-24 sm:h-32 md:h-40 lg:h-48 xl:h-56 w-auto max-w-full"
+        />
+      </div>
+      
+      
+    <h1 class="text-3xl font-bold text-[#FBFBFB] mb-4">
+      Microplastic Detection Tool
+    </h1>
+    <form onsubmit="handleSubmit(event)">
+      <div class="flex flex-col mb-4">
+        <label class="text-lg font-medium text-[#FBFBFB]" for="plasticType">
+          Plastic Type
+        </label>
+        <select
+          id="plasticType"
+          class="block w-full p-2 pl-10 text-sm text-[#FBFBFB] rounded-lg focus:ring-[#2F76DB] focus:border-[#2F76DB] bg-[#1F2D5A]"
+          onchange="setPlasticType(this.value)">
+          <option value="">Select plastic type</option>
+          <option value="PET">PET</option>
+          <option value="HDPE">HDPE</option>
+          <option value="PVC">PVC</option>
+          <option value="LDPE">LDPE</option>
+          <option value="PP">PP</option>
+          <option value="PS">PS</option>
+        </select>
+      </div>
+      <div class="flex flex-col mb-4">
+        <label class="text-lg font-medium text-[#FBFBFB]" for="particleSize">
+          Particle Size (mm)
+        </label>
+        <input
+          id="particleSize"
+          type="number"
+          class="block w-full p-2 pl-10 text-sm text-[#FBFBFB] rounded-lg focus:ring-[#2F76DB] focus:border-[#2F76DB] bg-[#1F2D5A]"
+          onchange="setParticleSize(this.value)" />
+      </div>
+      <div class="flex flex-col mb-4">
+        <label class="text-lg font-medium text-[#FBFBFB]" for="sampleLocation">
+          Sample Location
+        </label>
+        <input
+          id="sampleLocation"
+          type="text"
+          class="block w-full p-2 pl-10 text-sm text-[#FBFBFB] rounded-lg focus:ring-[#2F76DB] focus:border-[#2F76DB] bg-[#1F2D5A]"
+          onchange="setSampleLocation(this.value)" />
+      </div>
+      <div class="flex flex-col mb-4">
+        <label class="text-lg font-medium text-[#FBFBFB]" for="sampleDate">
+          Sample Date
+        </label>
+        <input
+          id="sampleDate"
+          type="date"
+          class="block w-full p-2 pl-10 text-sm text-[#FBFBFB] rounded-lg focus:ring-[#2F76DB] focus:border-[#2F76DB] bg-[#1F2D5A]"
+          onchange="setSampleDate(this.value)" />
+      </div>
+      <div class="flex flex-col mb-4">
+        <label class="text-lg font-medium text-[#FBFBFB]" for="image">
+          Upload Image
+        </label>
+        <input
+          id="image"
+          type="file"
+          class="block w-full p-2 pl-10 text-sm text-[#FBFBFB] rounded-lg focus:ring-[#2F76DB] focus:border-[#2F76DB] bg-[#1F2D5A]"
+          onchange="handleImageChange(event)" />
+      </div>
+      <button
+        type="submit"
+        class="w-full p-2 text-lg font-medium text-[#FBFBFB] bg-[#2F76DB] rounded-lg hover:bg-[#1F2D5A] focus:ring-[#2F76DB] focus:border-[#2F76DB]">
+        Send Sample for Analysis
+      </button>
+      <p id="results" class="text-lg font-medium text-[#FBFBFB] mt-4"></p>
+    </form>
+  </div>
+
+  <script>
+    let plasticType = '';
+    let particleSize = '';
+    let sampleLocation = '';
+    let sampleDate = '';
+    let image = null;
+
+    function setPlasticType(value) {
+      plasticType = value;
+    }
+
+    function setParticleSize(value) {
+      particleSize = value;
+    }
+
+    function setSampleLocation(value) {
+      sampleLocation = value;
+    }
+
+    function setSampleDate(value) {
+      sampleDate = value;
+    }
+
+    function handleImageChange(event) {
+      image = event.target.files[0];
+    }
+
+    function handleSubmit(event) {
+      event.preventDefault();
+
+      // Perform analysis and update the results
+      const results = 'Microplastic analysis in progress...';
+      document.getElementById('results').textContent = results;
+    }
+  </script>
+</body>
+</html>

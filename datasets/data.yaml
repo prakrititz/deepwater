@@ -1,0 +1,13 @@
+train: ../train/images
+val: ../valid/images
+test: ../test/images
+
+nc: 4
+names: ['fiber', 'film', 'fragment', 'pallet']
+
+roboflow:
+  workspace: iam
+  project: microplastics-m7mf5
+  version: 1
+  license: BY-NC-SA 4.0
+  url: https://universe.roboflow.com/iam/microplastics-m7mf5/dataset/1
