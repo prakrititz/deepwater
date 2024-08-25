@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Microplastic Detection Tool</title>
+    <title>Water Potability and Microplastic Detection Tool</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <style>
         body {
@@ -33,28 +33,81 @@
             <a href="/">
                 <img class="mx-auto h-24 w-auto" src="{{ url_for('static', filename='images/logo-deepwater/png/logo-color.png') }}" alt="Deepwater">
             </a>
-            <h2 class="mt-6 text-3xl font-extrabold">Microplastic Detection Tool</h2>
+            <h2 class="mt-6 text-3xl font-extrabold">1. Microplastic Detection Tool using Computer Vision and ML</h2>
         </div>
-        <form id="uploadForm" class="mt-8 space-y-6" enctype="multipart/form-data">
+        
+        <!-- Microplastic Detection Form -->
+        <form id="microplasticForm" class="mt-8 space-y-6" enctype="multipart/form-data">
             <div>
                 <label for="image" class="custom-file-upload w-full text-center block">
-                    Choose File
+                    Choose Image File for Microplastic Detection
                 </label>
-                <input id="image" name="image" type="file" accept="image/*" required>
+                <input id="image" name="image" type="file" accept="image/*">
                 <p id="file-chosen" class="mt-2 text-sm text-center">No file chosen</p>
             </div>
             <div>
                 <button type="submit" class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                    Send Sample for Analysis
+                    Analyze Microplastics
                 </button>
             </div>
         </form>
+        
+        <!-- Water Potability Form -->
+        <h2 class="mt-6 text-3xl font-extrabold">2. Check Potability Using AdaBoost ML Model.</h2>
+        <form id="potabilityForm" class="mt-8 space-y-6">
+            <div class="grid grid-cols-2 gap-4">
+                <!-- Water quality parameters -->
+                <div>  
+                    <label for="ph" class="block text-sm font-medium text-white">pH</label>
+                    <input id="ph" name="ph" type="number" step="any" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm text-black">
+                </div>
+                <div>
+                    <label for="hardness" class="block text-sm font-medium text-white">Hardness</label>
+                    <input id="hardness" name="hardness" type="number" step="any" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm text-black">
+                </div>
+                <div>
+                    <label for="solids" class="block text-sm font-medium text-white">Solids</label>
+                    <input id="solids" name="solids" type="number" step="any" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm text-black">
+                </div>
+                <div>
+                    <label for="chloramines" class="block text-sm font-medium text-white">Chloramines</label>
+                    <input id="chloramines" name="chloramines" type="number" step="any" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm text-black">
+                </div>
+                <div>
+                    <label for="sulfate" class="block text-sm font-medium text-white">Sulfate</label>
+                    <input id="sulfate" name="sulfate" type="number" step="any" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm text-black">
+                </div>
+                <div>
+                    <label for="conductivity" class="block text-sm font-medium text-white">Conductivity</label>
+                    <input id="conductivity" name="conductivity" type="number" step="any" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm text-black">
+                </div>
+                <div>
+                    <label for="organic_carbon" class="block text-sm font-medium text-white">Organic Carbon</label>
+                    <input id="organic_carbon" name="organic_carbon" type="number" step="any" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm text-black">
+                </div>
+                <div>
+                    <label for="trihalomethanes" class="block text-sm font-medium text-white">Trihalomethanes</label>
+                    <input id="trihalomethanes" name="trihalomethanes" type="number" step="any" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm text-black">
+                </div>
+                <div>
+                    <label for="turbidity" class="block text-sm font-medium text-white">Turbidity</label>
+                    <input id="turbidity" name="turbidity" type="number" step="any" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm text-black">
+                </div>
+            </div>
+            <div>
+                <button type="submit" class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+                    Check Potability
+                </button>
+            </div>
+        </form>
+        
         <div id="results" class="mt-6 text-center"></div>
     </div>
+        
     <script>
         const fileInput = document.getElementById('image');
         const fileChosen = document.getElementById('file-chosen');
-
+    
         fileInput.addEventListener('change', function() {
             if (this.files && this.files.length > 0) {
                 fileChosen.textContent = this.files[0].name;
@@ -62,26 +115,29 @@
                 fileChosen.textContent = 'No file chosen';
             }
         });
-
-        document.getElementById('uploadForm').addEventListener('submit', async function(event) {
+    
+        // Handle Microplastic Detection Form Submission
+        document.getElementById('microplasticForm').addEventListener('submit', async function(event) {
             event.preventDefault();
             
             const formData = new FormData();
             const imageFile = document.getElementById('image').files[0];
             formData.append('image', imageFile);
-        
-            document.getElementById('results').textContent = 'Analyzing...';
+    
+            document.getElementById('results').textContent = 'Analyzing microplastics...';
         
             try {
-                const response = await fetch('/analyze', {
+                const response = await fetch('/analyze_microplastic', {  // Change the endpoint as necessary
                     method: 'POST',
                     body: formData
                 });
             
                 if (response.ok) {
                     const result = await response.json();
-                    document.getElementById('results').innerHTML = `
-                        <h3 class="text-xl font-bold mb-2">Analysis Result</h3>
+    
+                    // Display microplastic detection results
+                    let microplasticResult = `
+                        <h3 class="text-xl font-bold mb-2">Microplastic Analysis Result</h3>
                         <p>Total Microplastics: ${result.total_count}</p>
                         <p>Microplastics count by type:</p>
                         <ul class="list-disc list-inside mb-4">
@@ -91,20 +147,61 @@
                             <li>Film: ${result.film}</li>
                         </ul>
                     `;
-                    
-                    // Display the predicted image
+    
                     const imgElement = document.createElement('img');
                     imgElement.src = result.image_path;
                     imgElement.alt = "Predicted Image";
                     imgElement.className = "mt-4 mx-auto max-w-full h-auto";
     
-                    // Clear previous image if any
                     const previousImage = document.getElementById('predictedImage');
                     if (previousImage) {
                         previousImage.remove();
                     }
                     imgElement.id = 'predictedImage';
-                    document.getElementById('results').appendChild(imgElement);
+                    microplasticResult += imgElement.outerHTML;
+    
+                    document.getElementById('results').innerHTML = microplasticResult;
+    
+                } else {
+                    document.getElementById('results').textContent = 'Error during analysis';
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById('results').textContent = 'Error during analysis';
+            }
+        });
+    
+        // Handle Potability Form Submission
+        document.getElementById('potabilityForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+    
+            const formData = new FormData();
+            formData.append('ph', document.getElementById('ph').value);
+            formData.append('hardness', document.getElementById('hardness').value);
+            formData.append('solids', document.getElementById('solids').value);
+            formData.append('chloramines', document.getElementById('chloramines').value);
+            formData.append('sulfate', document.getElementById('sulfate').value);
+            formData.append('conductivity', document.getElementById('conductivity').value);
+            formData.append('organic_carbon', document.getElementById('organic_carbon').value);
+            formData.append('trihalomethanes', document.getElementById('trihalomethanes').value);
+            formData.append('turbidity', document.getElementById('turbidity').value);
+    
+            document.getElementById('results').textContent = 'Checking potability...';
+    
+            try {
+                const response = await fetch('/check_potability', {  // Change the endpoint as necessary
+                    method: 'POST',
+                    body: formData
+                });
+    
+                if (response.ok) {
+                    const result = await response.json();
+                    const potabilityResult = `
+                        <h3 class="text-xl font-bold mt-6 mb-2">Water Potability Prediction</h3>
+                        <p>The water is <strong>${result.result}</strong>.</p>
+                    `;
+                    document.getElementById('results').innerHTML = potabilityResult;
+    
                 } else {
                     document.getElementById('results').textContent = 'Error during analysis';
                 }
