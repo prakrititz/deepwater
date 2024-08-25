@@ -46,8 +46,8 @@ Include relevant images that illustrate:
 ## Usage
 
 1. Prepare your water sample images and ensure they are labeled appropriately.
-2. Run the model training script: `python train_model.py`
-3. Use the inference script to assess water purity: `python infer_purity.py --image <path_to_image>`
+2. Run the model training script: `python app.py`
+3. Navigate through the flask app.
 
 ## Contributing
 
